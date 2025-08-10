@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+<div class="max-w-4xl mx-auto mt-8 px-4">
+    <h1 class="text-3xl font-bold text-blue-800 mb-8">Manage Chapters for {{ subject.name }}</h1>
+    <div class="bg-white rounded-2xl shadow-xl p-8 mb-8 flex flex-col items-center max-w-xl mx-auto">
+        <h2 class="text-2xl font-bold text-blue-700 mb-6">Add New Chapter</h2>
+        <form method="post" class="w-full space-y-6">
+            {% csrf_token %}
+            <div>
+                <label class="block text-lg font-medium text-gray-700 mb-2">Name:</label>
+                <input type="text" name="name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter chapter name" required />
+            </div>
+            <button type="submit" class="w-full bg-blue-600 text-white text-lg font-semibold px-6 py-3 rounded-lg hover:bg-blue-700 transition">Add Chapter</button>
+        </form>
+    </div>
+    <div class="bg-white rounded-lg shadow-lg p-6">
+        <h2 class="text-xl font-semibold text-blue-700 mb-4">All Chapters</h2>
+        {% if chapters %}
+            <ul class="space-y-2">
+                {% for chapter in chapters %}
+                <li class="flex justify-between items-center border-b py-2">
+                    <span class="font-bold text-blue-700">{{ chapter.name }}</span>
+                    <span>
+                        <a href="{% url 'manage_subjective_qas' chapter.mongoid %}" class="bg-blue-500 text-white px-3 py-1 rounded text-sm hover:bg-blue-600">Manage Q&amp;A</a>
+                        <a href="{% url 'edit_subjective_chapter' chapter.mongoid %}" class="bg-yellow-500 text-white px-3 py-1 rounded text-sm hover:bg-yellow-600 ml-2">Edit</a>
+                        <a href="{% url 'delete_subjective_chapter' chapter.mongoid %}" onclick="return confirm('Are you sure you want to delete this chapter?')" class="bg-red-600 text-white px-3 py-1 rounded text-sm hover:bg-red-700 ml-2">Delete</a>
+                    </span>
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-gray-500">No chapters found.</p>
+        {% endif %}
+    </div>
+    <a href="{% url 'manage_subjectives' %}" class="mt-4 inline-block text-blue-600 hover:underline">&larr; Back to Subjects</a>
+</div>
+{% endblock %} 

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎓lokcivil</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script>
+      window.tailwind = {
+        config: {
+          darkMode: 'class'
+        }
+      }
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      function toggleDarkMode() {
+        const html = document.documentElement;
+        html.classList.toggle('dark');
+        localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+        updateDarkIcon();
+      }
+      function updateDarkIcon() {
+        const html = document.documentElement;
+        const sun = document.getElementById('icon-sun');
+        const moon = document.getElementById('icon-moon');
+        if (html.classList.contains('dark')) {
+          sun.classList.add('hidden');
+          moon.classList.remove('hidden');
+        } else {
+          sun.classList.remove('hidden');
+          moon.classList.add('hidden');
+        }
+      }
+      window.onload = function() {
+        if(localStorage.getItem('theme') === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+        updateDarkIcon();
+      }
+    </script>
+</head>
+<body class="bg-gradient-to-br from-blue-50 via-white to-blue-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <nav class="sticky top-0 z-40 bg-white/80 dark:bg-gray-900/80 backdrop-blur shadow-md py-3 px-4 md:px-12 flex flex-wrap justify-between items-center">
+        <div class="flex items-center space-x-3">
+            <a href="/" class="flex items-center space-x-3">
+                <img src="/static/logo.png" alt="lokcivil logo" class="h-10 w-10 rounded-full bg-white p-1">
+                <span class="text-2xl font-extrabold text-blue-700 dark:text-blue-300 tracking-tight">lokcivil</span>
+            </a>
+        </div>
+        <div class="flex items-center space-x-4">
+            <button id="dark-toggle" onclick="toggleDarkMode()" aria-label="Toggle dark mode" class="relative w-10 h-10 flex items-center justify-center bg-gray-200 dark:bg-gray-700 rounded-full text-xl text-yellow-500 dark:text-blue-300 shadow hover:scale-110 transition">
+              <span id="dark-icon">
+                <!-- Sun icon (default) -->
+                <svg id="icon-sun" class="w-6 h-6 block dark:hidden" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 18a6 6 0 100-12 6 6 0 000 12zm0 2a8 8 0 110-16 8 8 0 010 16zm0-18a1 1 0 011 1v2a1 1 0 11-2 0V3a1 1 0 011-1zm0 18a1 1 0 011 1v2a1 1 0 11-2 0v-2a1 1 0 011-1zm10-8a1 1 0 01-1 1h-2a1 1 0 110-2h2a1 1 0 011 1zM5 12a1 1 0 01-1 1H2a1 1 0 110-2h2a1 1 0 011 1zm12.07 7.07a1 1 0 01-1.41 0l-1.42-1.42a1 1 0 111.42-1.42l1.41 1.42a1 1 0 010 1.42zM6.34 6.34a1 1 0 01-1.41 0L3.51 4.93a1 1 0 111.41-1.41l1.42 1.41a1 1 0 010 1.41zm11.32-1.41a1 1 0 010 1.41l-1.41 1.41a1 1 0 11-1.42-1.41l1.42-1.41a1 1 0 011.41 0zM6.34 17.66a1 1 0 010-1.42l1.41-1.41a1 1 0 111.42 1.42l-1.42 1.41a1 1 0 01-1.41 0z"/>
+                </svg>
+                <!-- Moon icon (dark) -->
+                <svg id="icon-moon" class="w-6 h-6 hidden dark:block" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"/>
+                </svg>
+              </span>
+            </button>
+            <button id="mobile-menu-btn" class="md:hidden ml-2 text-2xl">☰</button>
+        </div>
+        <ul id="main-menu" class="flex-col md:flex-row md:flex space-y-2 md:space-y-0 md:space-x-6 text-gray-700 dark:text-gray-200 font-medium hidden md:flex mt-4 md:mt-0">
+            <li><a href="/" class="hover:text-blue-600 dark:hover:text-blue-400 transition">Home</a></li>
+            <li><a href="{% if user.is_authenticated %}/notes/{% else %}/login/{% endif %}" class="hover:text-blue-600 dark:hover:text-blue-400 transition">Notes</a></li>
+            <li><a href="{% if user.is_authenticated %}/gk/{% else %}/login/{% endif %}" class="hover:text-blue-600 dark:hover:text-blue-400 transition">GK</a></li>
+            <li class="relative group">
+                <a href="{% if user.is_authenticated %}/pradesh/{% else %}/login/{% endif %}" class="hover:text-blue-600 dark:hover:text-blue-400 transition">Pradesh</a>
+                <ul class="absolute left-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg py-2 z-50 hidden group-hover:block">
+                    <li><a href="{% if user.is_authenticated %}/pradesh/?name=koshi{% else %}/login/{% endif %}" class="block px-4 py-2 hover:bg-blue-50 dark:hover:bg-gray-700">Koshi</a></li>
+                    <li><a href="{% if user.is_authenticated %}/pradesh/?name=madhesh{% else %}/login/{% endif %}" class="block px-4 py-2 hover:bg-blue-50 dark:hover:bg-gray-700">Madhesh</a></li>
+                    <li><a href="{% if user.is_authenticated %}/pradesh/?name=bagmati{% else %}/login/{% endif %}" class="block px-4 py-2 hover:bg-blue-50 dark:hover:bg-gray-700">Bagmati</a></li>
+                    <li><a href="{% if user.is_authenticated %}/pradesh/?name=gandaki{% else %}/login/{% endif %}" class="block px-4 py-2 hover:bg-blue-50 dark:hover:bg-gray-700">Gandaki</a></li>
+                    <li><a href="{% if user.is_authenticated %}/pradesh/?name=lumbini{% else %}/login/{% endif %}" class="block px-4 py-2 hover:bg-blue-50 dark:hover:bg-gray-700">Lumbini</a></li>
+                    <li><a href="{% if user.is_authenticated %}/pradesh/?name=karnali{% else %}/login/{% endif %}" class="block px-4 py-2 hover:bg-blue-50 dark:hover:bg-gray-700">Karnali</a></li>
+                    <li><a href="{% if user.is_authenticated %}/pradesh/?name=sudurpashchim{% else %}/login/{% endif %}" class="block px-4 py-2 hover:bg-blue-50 dark:hover:bg-gray-700">Sudurpashchim</a></li>
+                </ul>
+            </li>
+            <li><a href="{% if user.is_authenticated %}/model-sets/{% else %}/login/{% endif %}" class="hover:text-blue-600 dark:hover:text-blue-400 transition">Model Sets</a></li>
+            <li><a href="{% if user.is_authenticated %}/current-event/{% else %}/login/{% endif %}" class="hover:text-blue-600 dark:hover:text-blue-400 transition">Current Event</a></li>
+            <li><a href="{% if user.is_authenticated %}/objectives/{% else %}/login/{% endif %}" class="hover:text-blue-600 dark:hover:text-blue-400 transition">Objectives</a></li>
+            <li><a href="{% if user.is_authenticated %}/subjectives/{% else %}/login/{% endif %}" class="hover:text-blue-600 dark:hover:text-blue-400 transition">Subjectives</a></li>
+            <li><a href="{% if user.is_authenticated %}/templates/{% else %}/login/{% endif %}" class="hover:text-blue-600 dark:hover:text-blue-400 transition">Templates</a></li>
+            <li><a href="{% if user.is_authenticated %}/blog/{% else %}/login/{% endif %}" class="hover:text-blue-600 dark:hover:text-blue-400 transition">Blog</a></li>
+            <li><a href="{% if user.is_authenticated %}/gallery/{% else %}/login/{% endif %}" class="hover:text-blue-600 dark:hover:text-blue-400 transition">Gallery</a></li>
+            <li><a href="{% if user.is_authenticated %}/job-board/{% else %}/login/{% endif %}" class="hover:text-blue-600 dark:hover:text-blue-400 transition">Jobs</a></li>
+            {% if user.is_authenticated %}
+                <li class="relative" id="profile-dropdown-parent">
+                    <button id="profile-dropdown-btn" class="flex items-center space-x-2 focus:outline-none">
+                        <span class="bg-blue-100 text-blue-700 rounded-full w-8 h-8 flex items-center justify-center font-bold uppercase">{{ user.username|slice:":1" }}</span>
+                    <span class="hover:text-blue-600 dark:hover:text-blue-400 transition ml-2">{{ user.username }}</span>
+                    </button>
+                    <ul id="profile-dropdown-menu" class="absolute right-0 mt-2 w-40 bg-white dark:bg-gray-800 rounded-lg shadow-lg py-2 z-50 hidden">
+                        {% if user.role == 'admin' %}
+                    <li><a href="/dashboard/" class="block px-4 py-2 hover:bg-blue-50 dark:hover:bg-gray-700 font-semibold text-blue-700 dark:text-blue-300">Admin Dashboard</a></li>
+                        {% endif %}
+                    <li><a href="/profile/" class="block px-4 py-2 hover:bg-blue-50 dark:hover:bg-gray-700">View Profile</a></li>
+                    <li><a href="/edit-profile/" class="block px-4 py-2 hover:bg-blue-50 dark:hover:bg-gray-700">Edit Profile</a></li>
+                        <li><a href="#" onclick="showLogoutModal(event)" class="block px-4 py-2 text-red-600 hover:bg-blue-50 dark:hover:bg-gray-700">Logout</a></li>
+                    </ul>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+    <script>
+      document.getElementById('mobile-menu-btn').onclick = function() {
+        var menu = document.getElementById('main-menu');
+        menu.classList.toggle('hidden');
+      }
+    </script>
+    <main class="flex-1">
+        {% block content %}{% endblock %}
+    </main>
+    <footer class="bg-gray-900 text-gray-200 pt-10 pb-4 mt-8">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+          <!-- Left: Suren photo & Description -->
+          <div>
+            <div class="flex items-center mb-3">
+              <img src="/static/suren.png" alt="Suren" class="h-10 w-10 rounded-full mr-2 border-2 border-blue-400 shadow">
+              <span class="text-2xl font-bold text-white">lokcivil</span>
+            </div>
+            <p class="text-sm text-gray-400">Your trusted partner for Lok Sewa exam preparation. Comprehensive study materials, quizzes, and resources for all levels.</p>
+          </div>
+          <!-- Quick Links -->
+          <div>
+            <h3 class="font-bold text-lg mb-3 text-white">Quick Links</h3>
+            <ul class="space-y-2 text-sm">
+              <li><a href="/" class="hover:text-blue-400">Home</a></li>
+              <li><a href="/services/" class="hover:text-blue-400">Services</a></li>
+              <li><a href="/contact/" class="hover:text-blue-400">Contact</a></li>
+              <li><a href="/blog/" class="hover:text-blue-400">Blog</a></li>
+            </ul>
+          </div>
+          <!-- Contact Info -->
+          <div>
+            <h3 class="font-bold text-lg mb-3 text-white">Contact Info</h3>
+            <ul class="space-y-2 text-sm">
+              <li class="flex items-center"><span class="mr-2">✉️</span> <span>support@lokcivil.com</span></li>
+              <li class="flex items-center"><span class="mr-2">📞</span> <span>+977-9818092683</span></li>
+              <li class="flex items-center"><span class="mr-2">📍</span> <span>Kathmandu, Nepal</span></li>
+            </ul>
+            <!-- <div class="flex space-x-4 mt-4">
+              <a href="#" class="hover:text-blue-400"><span class="sr-only">Facebook</span><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg></a>
+              <a href="#" class="hover:text-blue-400"><span class="sr-only">Twitter</span><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg></a>
+              <a href="#" class="hover:text-blue-400"><span class="sr-only">Instagram</span><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg></a>
+              <a href="#" class="hover:text-blue-400"><span class="sr-only">YouTube</span><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg></a>
+            </div> -->
+          </div>
+        </div>
+        <hr class="my-6 border-gray-700">
+        <div class="flex flex-col md:flex-row justify-between items-center text-gray-500 text-sm">
+          <div class="mb-2 md:mb-0">&copy; 2025 lokcivil. All rights reserved.</div>
+          <div class="space-x-4">
+            <a href="#" class="hover:text-blue-400">Privacy Policy</a>
+            <a href="#" class="hover:text-blue-400">Terms of Service</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- Logout Confirmation Modal -->
+    <div id="logout-modal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 hidden">
+        <div class="bg-white dark:bg-gray-900 rounded-lg shadow-lg max-w-sm w-full p-6 text-center relative">
+            <h2 class="text-xl font-bold mb-4 text-blue-700 dark:text-blue-300">Confirm Logout</h2>
+            <p class="mb-6 text-gray-700 dark:text-gray-200">Are you sure you want to logout?</p>
+            <form id="logout-form" method="post" action="/logout/">
+                {% csrf_token %}
+                <button type="submit" class="bg-blue-700 text-white px-6 py-2 rounded mr-2">Yes, Logout</button>
+                <button type="button" onclick="hideLogoutModal()" class="bg-gray-300 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-6 py-2 rounded">Cancel</button>
+            </form>
+            <button onclick="hideLogoutModal()" class="absolute top-2 right-2 text-gray-700 dark:text-gray-200 text-2xl">&times;</button>
+        </div>
+    </div>
+    <script>
+    function showLogoutModal(e) {
+        e.preventDefault();
+        document.getElementById('logout-modal').classList.remove('hidden');
+    }
+    function hideLogoutModal() {
+        document.getElementById('logout-modal').classList.add('hidden');
+    }
+    // Profile dropdown toggle
+    const profileBtn = document.getElementById('profile-dropdown-btn');
+    const profileMenu = document.getElementById('profile-dropdown-menu');
+    if (profileBtn && profileMenu) {
+      profileBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        profileMenu.classList.toggle('hidden');
+      });
+      // Close dropdown when clicking outside
+      document.addEventListener('click', function(e) {
+        if (!profileMenu.classList.contains('hidden')) {
+          if (!document.getElementById('profile-dropdown-parent').contains(e.target)) {
+            profileMenu.classList.add('hidden');
+          }
+        }
+      });
+      // Close dropdown when clicking a menu item
+      profileMenu.querySelectorAll('a').forEach(function(link) {
+        link.addEventListener('click', function() {
+          profileMenu.classList.add('hidden');
+        });
+      });
+    }
+    </script>
+</body>
+</html> 

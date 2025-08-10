@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-4xl mx-auto mt-12">
+    <h1 class="text-4xl font-extrabold text-blue-800 mb-8 text-center">Current Events</h1>
+    {% if events %}
+        <div class="grid gap-8">
+            {% for event in events %}
+                <div class="bg-white rounded-lg shadow p-6 flex flex-col md:flex-row items-center">
+                    {% if event.image %}
+                        <img src="{{ event.image.url }}" alt="{{ event.title }}" class="w-32 h-24 object-cover rounded mb-4 md:mb-0 md:mr-6">
+                    {% endif %}
+                    <div class="flex-1">
+                        <h2 class="text-2xl font-bold text-blue-700 mb-2">
+                            <a href="/current-event/{{ event.mongoid }}/" class="hover:underline">{{ event.title }}</a>
+                        </h2>
+                        <div class="text-gray-500 mb-2">{{ event.created_at|date:'F j, Y, g:i a' }}</div>
+                        <div class="text-gray-700 mb-2">{{ event.description|truncatewords:30 }}</div>
+                        {% if event.document %}
+                            <a href="{{ event.document.url }}" class="text-blue-600 hover:underline text-sm" target="_blank">View Document</a>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-center text-gray-500">No current events available.</p>
+    {% endif %}
+</div>
+{% endblock %} 

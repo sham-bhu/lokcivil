@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>{{ model_set.title }}</h2>
+<p>{{ model_set.description }}</p>
+<p>Timer: {{ model_set.timer_hours }}:{{ model_set.timer_minutes }}:{{ model_set.timer_seconds }}</p>
+<form method="get" action="{% url 'model_set_test' model_set.mongoid %}"><button type="submit">Start Test</button></form>
+<a href="{% url 'model_sets_by_category' model_set.category.mongoid %}">Back to Model Sets</a>
+{% endblock %} 

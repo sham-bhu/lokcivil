@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Model Sets in {{ category.name }}</h2>
+<ul>
+{% for model_set in model_sets %}
+  <li><a href="{% url 'model_set_start' model_set.mongoid %}">{{ model_set.title }}</a> (Timer: {{ model_set.timer_hours }}:{{ model_set.timer_minutes }}:{{ model_set.timer_seconds }})</li>
+{% endfor %}
+</ul>
+<a href="{% url 'model_set_categories' %}">Back to Categories</a>
+{% endblock %} 

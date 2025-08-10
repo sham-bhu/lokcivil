@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>{{ model_set.title }}</h2>
+<p>Time Remaining: <span id="timer"></span></p>
+<form method="post">{% csrf_token %}
+{% for q in questions %}
+  <div class="question-block">
+    <p><b>Q{{ forloop.counter }}. {{ q.question_text }}</b></p>
+    <label><input type="radio" name="answer_{{ q.mongoid }}" value="A"> A. {{ q.option_a }}</label><br>
+    <label><input type="radio" name="answer_{{ q.mongoid }}" value="B"> B. {{ q.option_b }}</label><br>
+    <label><input type="radio" name="answer_{{ q.mongoid }}" value="C"> C. {{ q.option_c }}</label><br>
+    <label><input type="radio" name="answer_{{ q.mongoid }}" value="D"> D. {{ q.option_d }}</label><br>
+  </div>
+{% endfor %}
+<button type="submit">Submit Test</button>
+</form>
+<script>
+let totalSeconds = parseInt('{{ total_seconds|default:0 }}');
+function updateTimer() {
+  let h = Math.floor(totalSeconds / 3600);
+  let m = Math.floor((totalSeconds % 3600) / 60);
+  let s = totalSeconds % 60;
+  document.getElementById('timer').textContent = `${h}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+  if (totalSeconds <= 0) { document.querySelector('form').submit(); return; }
+  totalSeconds--; setTimeout(updateTimer, 1000);
+}
+updateTimer();
+</script>
+<a href="{% url 'model_set_start' model_set.mongoid %}">Back</a>
+{% endblock %} 

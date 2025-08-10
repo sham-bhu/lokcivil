@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}Objectives - Lok Sewa{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="text-center mb-8">
+        <h1 class="text-4xl font-bold text-blue-800 dark:text-white mb-4">Objective Questions</h1>
+        <p class="text-lg text-dark-600 dark:text-dark-300">Practice MCQs organized by subjects and topics</p>
+    </div>
+
+    {% if subjects %}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for subject in subjects %}
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-xl font-semibold text-gray-800 dark:text-white">{{ subject.name }}</h3>
+                        <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
+                            {{ subject.sets.count }} Sets
+                        </span>
+                    </div>
+                    
+                    {% if subject.description %}
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">{{ subject.description }}</p>
+                    {% endif %}
+                    
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-500 dark:text-gray-400">
+                            Created: {{ subject.created_at|date:"M d, Y" }}
+                        </span>
+                        <a href="{% url 'objective_subject_detail' subject.mongoid %}" 
+                           class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors duration-200">
+                            View Sets
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="text-center py-12">
+            <div class="text-gray-400 dark:text-gray-500 mb-4">
+                <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-600 dark:text-gray-400 mb-2">No Subjects Available</h3>
+            <p class="text-gray-500 dark:text-gray-500">Subjects will be added by administrators soon.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %} 

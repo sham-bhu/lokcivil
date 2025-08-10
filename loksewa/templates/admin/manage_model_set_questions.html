@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Questions for {{ model_set.title }}</h2>
+<form method="post">{% csrf_token %}{{ form.as_p }}<button type="submit">Add Question</button></form>
+<table><thead><tr><th>Question</th><th>Options</th><th>Correct</th><th>Actions</th></tr></thead><tbody>
+{% for question in questions %}
+<tr><td>{{ question.question_text|truncatechars:50 }}</td><td>A. {{ question.option_a }}<br>B. {{ question.option_b }}<br>C. {{ question.option_c }}<br>D. {{ question.option_d }}</td><td>{{ question.correct_option }}</td>
+<td><a href="{% url 'edit_model_set_question' question.mongoid %}">Edit</a> | <a href="{% url 'delete_model_set_question' question.mongoid %}">Delete</a></td></tr>
+{% endfor %}
+</tbody></table>
+<a href="{% url 'manage_model_sets' %}">Back to Model Sets</a>
+{% endblock %} 

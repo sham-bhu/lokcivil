@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+  .profile-label { color: #64748b; font-weight: 500; }
+  .profile-value { color: #1e293b; font-weight: 600; }
+</style>
+<div class="flex items-center justify-center min-h-screen">
+  <div class="glass-card max-w-lg w-full mx-auto p-10 rounded-2xl shadow-xl bg-white dark:bg-gray-900">
+    <h2 class="text-3xl font-extrabold mb-8 text-center text-blue-700 dark:text-blue-300 drop-shadow">Your Profile</h2>
+    <div class="flex flex-col items-center space-y-6">
+      <div class="bg-blue-100 text-blue-700 rounded-full w-20 h-20 flex items-center justify-center text-3xl font-bold uppercase mb-2">
+        {{ user.username|slice:':1' }}
+      </div>
+      <div class="w-full space-y-4">
+        <div class="flex flex-col md:flex-row md:items-center md:space-x-4">
+          <span class="profile-label w-32">First Name:</span>
+          <span class="profile-value">{{ user.first_name }}</span>
+        </div>
+        <div class="flex flex-col md:flex-row md:items-center md:space-x-4">
+          <span class="profile-label w-32">Last Name:</span>
+          <span class="profile-value">{{ user.last_name }}</span>
+        </div>
+        <div class="flex flex-col md:flex-row md:items-center md:space-x-4">
+          <span class="profile-label w-32">Username:</span>
+          <span class="profile-value">{{ user.username }}</span>
+        </div>
+        <div class="flex flex-col md:flex-row md:items-center md:space-x-4">
+          <span class="profile-label w-32">Email:</span>
+          <span class="profile-value">{{ user.email }}</span>
+        </div>
+        <div class="flex flex-col md:flex-row md:items-center md:space-x-4">
+          <span class="profile-label w-32">Date Joined:</span>
+          <span class="profile-value">{{ user.date_joined|date:'F j, Y, g:i a' }}</span>
+        </div>
+        <div class="flex flex-col md:flex-row md:items-center md:space-x-4">
+          <span class="profile-label w-32">Last Login:</span>
+          <span class="profile-value">{{ user.last_login|date:'F j, Y, g:i a' }}</span>
+        </div>
+      </div>
+      <a href="/accounts/edit-profile/" class="mt-6 inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition">Edit Profile</a>
+    </div>
+    <!-- Contact Messages and Admin Replies -->
+    <div class="mt-10 w-full">
+      <h3 class="text-xl font-bold text-blue-700 mb-4">Your Contact Messages & Admin Replies</h3>
+      {% if contact_messages %}
+        <div class="space-y-4">
+          {% for msg in contact_messages %}
+            <div class="border rounded-lg p-4 bg-gray-50 dark:bg-gray-800">
+              <div class="text-sm text-gray-500 mb-1">Sent: {{ msg.sent_at|date:'F j, Y, g:i a' }}</div>
+              <div class="mb-2"><span class="font-semibold">Your message:</span> {{ msg.message }}</div>
+              {% if msg.reply %}
+                <div class="mt-2 p-3 bg-green-100 dark:bg-green-900 rounded">
+                  <span class="font-semibold text-green-700 dark:text-green-300">Admin reply:</span> {{ msg.reply }}
+                </div>
+              {% else %}
+                <div class="mt-2 text-yellow-600 dark:text-yellow-300">No reply yet from admin.</div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="text-gray-500">You have not sent any messages yet.</div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %} 

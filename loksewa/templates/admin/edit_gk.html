@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-4xl mx-auto mt-8 px-4">
+    <h1 class="text-3xl font-bold text-blue-800 mb-8">Edit GK Entry</h1>
+    <!-- Messages -->
+    {% if messages %}
+        <div class="mb-6">
+            {% for message in messages %}
+                <div class="p-4 rounded-md {% if message.tags == 'success' %}bg-green-100 text-green-700{% else %}bg-red-100 text-red-700{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <!-- Edit Form -->
+    <div class="bg-white rounded-lg shadow-lg p-6">
+        <h2 class="text-xl font-semibold text-blue-700 mb-4">Edit GK: {{ entry.title }}</h2>
+        <form method="post" enctype="multipart/form-data" class="space-y-4">
+            {% csrf_token %}
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Type</label>
+                    <select name="type" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <option value="nepal" {% if entry.type == 'nepal' %}selected{% endif %}>Nepali GK</option>
+                        <option value="world" {% if entry.type == 'world' %}selected{% endif %}>World GK</option>
+                        <option value="technical" {% if entry.type == 'technical' %}selected{% endif %}>Technical GK</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Title</label>
+                    <input type="text" name="title" value="{{ entry.title }}" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="GK Title">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Upload New Document (Optional)</label>
+                    <input type="file" name="document" accept=".pdf,.doc,.docx" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    {% if entry.document %}
+                        <p class="text-sm text-gray-500 mt-1">Current: {{ entry.document.name|slice:"10:" }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Q&A Pairs</label>
+                <div id="qa-list">
+                    {% for q in questions %}
+                    <div class="flex flex-col md:flex-row gap-2 mb-2 qa-pair">
+                        <input type="text" name="question" value="{{ q.question }}" placeholder="Question" class="flex-1 px-3 py-2 border border-gray-300 rounded-md" required>
+                        <input type="text" name="answer" value="{{ q.answer }}" placeholder="Answer" class="flex-1 px-3 py-2 border border-gray-300 rounded-md">
+                        <button type="button" class="remove-qa bg-red-500 text-white px-2 py-1 rounded">&times;</button>
+                    </div>
+                    {% endfor %}
+                </div>
+                <button type="button" id="add-qa" class="mt-2 bg-blue-500 text-white px-4 py-1 rounded">Add Q&A</button>
+            </div>
+            <div class="flex space-x-4">
+                <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition">Update GK</button>
+                <a href="{% url 'manage_gk' %}" class="bg-gray-500 text-white px-6 py-2 rounded-md hover:bg-gray-600 transition">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+// Dynamic Q&A add/remove
+const qaList = document.getElementById('qa-list');
+document.getElementById('add-qa').onclick = function() {
+    const div = document.createElement('div');
+    div.className = 'flex flex-col md:flex-row gap-2 mb-2 qa-pair';
+    div.innerHTML = `<input type="text" name="question" placeholder="Question" class="flex-1 px-3 py-2 border border-gray-300 rounded-md" required>
+    <input type="text" name="answer" placeholder="Answer" class="flex-1 px-3 py-2 border border-gray-300 rounded-md">
+    <button type="button" class="remove-qa bg-red-500 text-white px-2 py-1 rounded">&times;</button>`;
+    qaList.appendChild(div);
+};
+qaList.addEventListener('click', function(e) {
+    if (e.target.classList.contains('remove-qa')) {
+        e.target.parentElement.remove();
+    }
+});
+</script>
+{% endblock %} 

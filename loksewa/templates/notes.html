@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-5xl mx-auto mt-16">
+    <h1 class="text-4xl font-extrabold text-blue-800 dark:text-blue-200 mb-10 text-center drop-shadow">Study Notes</h1>
+    <form method="get" class="mb-10 flex justify-center">
+        <input type="text" name="q" placeholder="Search notes..." class="border-2 border-blue-200 dark:border-gray-700 rounded-l-xl px-6 py-3 w-2/3 focus:ring-2 focus:ring-blue-400 dark:bg-gray-800 dark:text-gray-100"/>
+        <button type="submit" class="bg-gradient-to-r from-blue-700 to-blue-500 text-white px-8 py-3 rounded-r-xl font-bold hover:scale-105 transition">Search</button>
+    </form>
+    <div class="bg-white dark:bg-gray-800 shadow-xl rounded-2xl p-8">
+        {% if notes %}
+            <ul>
+                {% for note in notes %}
+                <li class="mb-6 flex justify-between items-center border-b border-blue-100 dark:border-gray-700 pb-4">
+                    <span class="font-semibold text-lg text-blue-700 dark:text-blue-200">{{ note.title }}</span>
+                    <div class="flex space-x-3 items-center">
+                        <a href="{{ note.file.url }}" target="_blank" class="text-blue-600 dark:text-blue-300 hover:underline font-semibold">Preview</a>
+                        <a href="{{ note.file.url }}" class="text-blue-600 dark:text-blue-300 hover:underline font-semibold" download>Download</a>
+                        {% if user.is_authenticated %}
+                        <button onclick="toggleBookmark('note', {{ note.id }}, this)" class="ml-2">
+                            {% if note.id in bookmarks %}
+                            <span class="text-yellow-400">&#9733;</span>
+                            {% else %}
+                            <span class="text-gray-400">&#9734;</span>
+                            {% endif %}
+                        </button>
+                        {% endif %}
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-center text-gray-500 dark:text-gray-400">No notes found.</p>
+        {% endif %}
+    </div>
+</div>
+<script>
+function toggleBookmark(model, id, btn) {
+    fetch(`/accounts/bookmark/${model}/${id}/`, {method: 'POST', headers: {'X-CSRFToken': '{{ csrf_token }}'}})
+      .then(r => r.json())
+      .then(data => {
+        if(data.status === 'added') {
+          btn.innerHTML = '<span class="text-yellow-400">&#9733;</span>';
+        } else {
+          btn.innerHTML = '<span class="text-gray-400">&#9734;</span>';
+        }
+      });
+}
+</script>
+{% endblock %} 

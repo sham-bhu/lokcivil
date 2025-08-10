@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-4xl mx-auto mt-12">
+    <h1 class="text-3xl font-bold text-blue-800 mb-6">Blog</h1>
+    <div class="bg-white shadow rounded-lg p-6">
+        {% if articles %}
+            <ul>
+                {% for article in articles %}
+                <li class="mb-4">
+                    <div class="flex justify-between items-center">
+                        <h2 class="text-xl font-semibold text-blue-700">{{ article.title }}</h2>
+                        {% if user.is_authenticated %}
+                        <button onclick="toggleBookmark('article', {{ article.id }}, this)" class="ml-2">
+                            {% if article.id in bookmarks %}
+                            <span class="text-yellow-400">&#9733;</span>
+                            {% else %}
+                            <span class="text-gray-400">&#9734;</span>
+                            {% endif %}
+                        </button>
+                        {% endif %}
+                    </div>
+                    <p>{{ article.content|truncatewords:40 }}</p>
+                    <a href="{{ article.get_absolute_url }}" class="text-blue-600 hover:underline">Read more</a>
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No articles found.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+<script>
+function toggleBookmark(model, id, btn) {
+    fetch(`/accounts/bookmark/${model}/${id}/`, {method: 'POST', headers: {'X-CSRFToken': '{{ csrf_token }}'}})
+      .then(r => r.json())
+      .then(data => {
+        if(data.status === 'added') {
+          btn.innerHTML = '<span class="text-yellow-400">&#9733;</span>';
+        } else {
+          btn.innerHTML = '<span class="text-gray-400">&#9734;</span>';
+        }
+      });
+}
+</script> 

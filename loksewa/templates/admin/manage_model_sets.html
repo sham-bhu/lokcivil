@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+.modelset-container {
+  max-width: 850px;
+  margin: 2.5rem auto;
+  padding: 2rem 2.5vw;
+  background: #f9fafb;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+.modelset-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 2rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+.modelset-table th, .modelset-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #f0f0f0;
+}
+.modelset-table th {
+  background: #f8fafc;
+  color: #333;
+  font-weight: 600;
+}
+.modelset-table tr:hover {
+  background: #f1f5f9;
+}
+.badge {
+  display: inline-block;
+  padding: 0.25em 0.7em;
+  font-size: 0.9em;
+  color: #fff;
+  border-radius: 12px;
+  background: #6366f1;
+  margin-right: 0.5em;
+}
+.action-btn {
+  display: inline-block;
+  margin-right: 0.5em;
+  padding: 0.3em 0.8em;
+  border-radius: 6px;
+  font-size: 0.95em;
+  text-decoration: none;
+  color: #fff;
+  background: #3b82f6;
+  transition: background 0.2s;
+}
+.action-btn.edit { background: #10b981; }
+.action-btn.delete { background: #ef4444; }
+.action-btn.questions { background: #6366f1; }
+.action-btn.bulk { background: #f59e42; }
+.action-btn:hover { filter: brightness(0.95); }
+.add-form {
+  background: #f8fafc;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+.add-form input, .add-form select, .add-form textarea {
+  width: 100%;
+  padding: 0.7em;
+  margin-bottom: 1em;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 1em;
+}
+.add-form button {
+  background: #6366f1;
+  color: #fff;
+  border: none;
+  padding: 0.7em 2em;
+  border-radius: 6px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.add-form button:hover { background: #4338ca; }
+.manage-categories-btn {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  background: #6366f1;
+  color: #fff;
+  padding: 0.7em 1.5em;
+  border-radius: 6px;
+  font-size: 1.05em;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+.manage-categories-btn:hover { background: #4338ca; }
+@media (max-width: 900px) {
+  .modelset-container { max-width: 98vw; padding: 1rem 1vw; }
+}
+@media (max-width: 700px) {
+  .modelset-table, .modelset-table thead, .modelset-table tbody, .modelset-table th, .modelset-table td, .modelset-table tr {
+    display: block;
+  }
+  .modelset-table tr { margin-bottom: 1.5em; }
+  .modelset-table td { border: none; padding: 0.7em 0; }
+}
+</style>
+<div class="modelset-container">
+<a href="/manage-categories/" class="manage-categories-btn">🗂️ Manage Categories</a>
+<h2 style="margin-bottom:1.5rem;">Manage Model Sets</h2>
+<div class="add-form">
+  <h3 style="margin-bottom:1rem;">Add New Model Set</h3>
+  <form method="post" enctype="multipart/form-data">{% csrf_token %}{{ form.as_p }}<button type="submit">Add Model Set</button></form>
+</div>
+<table class="modelset-table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Category</th>
+      <th>Timer</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for model_set in model_sets %}
+    <tr>
+      <td><span style="font-weight:600;">{{ model_set.title }}</span></td>
+      <td><span class="badge">{{ model_set.category.name }}</span></td>
+      <td><span class="badge" style="background:#10b981;">⏰ {{ model_set.timer_hours }}:{{ model_set.timer_minutes|stringformat:'02d' }}:{{ model_set.timer_seconds|stringformat:'02d' }}</span></td>
+      <td>
+        <a href="{% url 'edit_model_set' model_set.mongoid %}" class="action-btn edit" title="Edit">✏️ Edit</a>
+        <a href="{% url 'delete_model_set' model_set.mongoid %}" class="action-btn delete" title="Delete" onclick="return confirm('Delete this model set?');">🗑️ Delete</a>
+        <a href="{% url 'manage_model_set_questions' model_set.mongoid %}" class="action-btn questions" title="Questions">❓ Questions</a>
+        <a href="{% url 'bulk_add_model_set_questions' model_set.mongoid %}" class="action-btn bulk" title="Bulk Add">➕ Bulk Add</a>
+      </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="4">No model sets found.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endblock %} 

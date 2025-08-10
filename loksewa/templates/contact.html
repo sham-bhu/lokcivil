@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="flex flex-col md:flex-row gap-8 max-w-6xl mx-auto mt-12">
+  <!-- Left: Contact Cards -->
+  <div class="flex flex-col gap-8 md:w-1/3">
+    <div class="bg-white rounded-lg shadow p-8 flex flex-col items-center">
+      <svg class="w-16 h-16 text-blue-600 mb-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M22 16.92V19a2 2 0 01-2 2A18 18 0 013 5a2 2 0 012-2h2.09a2 2 0 012 1.72c.13 1.13.37 2.23.72 3.28a2 2 0 01-.45 2.11l-.27.27a16 16 0 006.29 6.29l.27-.27a2 2 0 012.11-.45c1.05.35 2.15.59 3.28.72A2 2 0 0122 16.92z"/></svg>
+      <div class="text-center">
+        <div class="text-lg">Call us directly at</div>
+        <div class="text-2xl font-bold text-blue-600 mt-2">+977-9818092683</div>
+      </div>
+    </div>
+    <div class="bg-white rounded-lg shadow p-8 flex flex-col items-center">
+      <svg class="w-14 h-14 text-blue-600 mb-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8h2a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2v-8a2 2 0 012-2h2m10 0V6a4 4 0 00-8 0v2m8 0H7"/></svg>
+      <div class="text-center">
+        <div class="text-lg mb-4">Chat with our support team</div>
+        <button class="bg-blue-600 text-white px-8 py-2 rounded font-semibold text-lg shadow hover:bg-blue-700 transition">Locate</button>
+      </div>
+    </div>
+  </div>
+  <!-- Right: Contact Form -->
+  <form method="post" class="bg-white rounded-lg shadow p-8 flex-1 grid grid-cols-1 md:grid-cols-2 gap-6">
+        {% csrf_token %}
+    <div class="flex flex-col">
+      <label class="font-semibold mb-1">First Name</label>
+      <input type="text" name="first_name" class="border-b-2 border-gray-300 focus:border-blue-600 outline-none py-2 mb-4" placeholder="First Name" required>
+    </div>
+    <div class="flex flex-col">
+      <label class="font-semibold mb-1">Last Name</label>
+      <input type="text" name="last_name" class="border-b-2 border-gray-300 focus:border-blue-600 outline-none py-2 mb-4" placeholder="Last Name" required>
+    </div>
+    <div class="flex flex-col">
+      <label class="font-semibold mb-1">Email</label>
+      <input type="email" name="email" class="border-b-2 border-gray-300 focus:border-blue-600 outline-none py-2 mb-4" placeholder="Email" required>
+    </div>
+    <div class="flex flex-col">
+      <label class="font-semibold mb-1">Phone Number</label>
+      <input type="text" name="phone" class="border-b-2 border-gray-300 focus:border-blue-600 outline-none py-2 mb-4" placeholder="Phone Number">
+        </div>
+    <div class="flex flex-col md:col-span-1">
+      <label class="font-semibold mb-1">Address</label>
+      <textarea name="address" class="border-b-2 border-gray-300 focus:border-blue-600 outline-none py-2 mb-4 resize-none" placeholder="Address" rows="2"></textarea>
+        </div>
+    <div class="flex flex-col md:col-span-1">
+      <label class="font-semibold mb-1">Message</label>
+      <textarea name="message" class="border-b-2 border-gray-300 focus:border-blue-600 outline-none py-2 mb-4 resize-none" placeholder="Message" rows="2" required></textarea>
+        </div>
+    <div class="md:col-span-2 flex justify-center mt-4">
+      <button type="submit" class="bg-blue-600 text-white px-16 py-3 rounded font-semibold text-xl shadow hover:bg-blue-700 transition">Submit</button>
+    </div>
+  </form>
+</div>
+{% endblock %} 

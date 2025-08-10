@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-3xl mx-auto mt-8 px-4">
+    <h1 class="text-2xl font-bold text-blue-800 mb-6">Edit Province Entry</h1>
+    <form method="post" enctype="multipart/form-data" class="space-y-4" id="edit-pradesh-form">
+        {% csrf_token %}
+        <div class="grid md:grid-cols-2 gap-6">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Select Province</label>
+                <select name="province" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <option value="1" {% if pradesh.province == 1 %}selected{% endif %}>Koshi</option>
+                    <option value="2" {% if pradesh.province == 2 %}selected{% endif %}>Madhesh</option>
+                    <option value="3" {% if pradesh.province == 3 %}selected{% endif %}>Bagmati</option>
+                    <option value="4" {% if pradesh.province == 4 %}selected{% endif %}>Gandaki</option>
+                    <option value="5" {% if pradesh.province == 5 %}selected{% endif %}>Lumbini</option>
+                    <option value="6" {% if pradesh.province == 6 %}selected{% endif %}>Karnali</option>
+                    <option value="7" {% if pradesh.province == 7 %}selected{% endif %}>Sudurpashchim</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Title</label>
+                <input type="text" name="title" value="{{ pradesh.title }}" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Province Title">
+            </div>
+            <div class="md:col-span-2">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Upload Document (PDF, PPT, Word; Optional)</label>
+                <input type="file" name="document" accept=".pdf,.ppt,.pptx,.doc,.docx" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                {% if pradesh.document %}
+                <p class="mt-2 text-sm text-blue-700">Current: <a href="{{ pradesh.document.url }}" target="_blank">View/Download Document</a></p>
+                {% endif %}
+            </div>
+            <div class="md:col-span-2">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Upload Image (Optional)</label>
+                <input type="file" name="image" accept="image/*" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                {% if pradesh.image %}
+                <p class="mt-2 text-sm text-blue-700">Current: <img src="{{ pradesh.image.url }}" alt="{{ pradesh.title }}" class="w-32 h-24 object-cover rounded inline-block"></p>
+                {% endif %}
+            </div>
+            <div class="md:col-span-2">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Description (Optional)</label>
+                <textarea name="description" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter description...">{{ pradesh.description }}</textarea>
+            </div>
+        </div>
+        <div id="qa-list">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Questions & Answers</label>
+            {% for qa in qas %}
+            <div class="qa-pair mb-4 flex flex-col md:flex-row gap-4">
+                <input type="text" name="question" value="{{ qa.question }}" class="flex-1 px-3 py-2 border border-gray-300 rounded-md mb-2 md:mb-0" placeholder="Question">
+                <input type="text" name="answer" value="{{ qa.answer }}" class="flex-1 px-3 py-2 border border-gray-300 rounded-md" placeholder="Answer (optional)">
+                <button type="button" class="remove-qa bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Remove</button>
+            </div>
+            {% endfor %}
+            {% if not qas %}
+            <div class="qa-pair mb-4 flex flex-col md:flex-row gap-4">
+                <input type="text" name="question" class="flex-1 px-3 py-2 border border-gray-300 rounded-md mb-2 md:mb-0" placeholder="Question">
+                <input type="text" name="answer" class="flex-1 px-3 py-2 border border-gray-300 rounded-md" placeholder="Answer (optional)">
+                <button type="button" class="remove-qa bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Remove</button>
+            </div>
+            {% endif %}
+        </div>
+        <div class="flex gap-4">
+            <button type="button" id="add-qa" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">+ Add Q&A</button>
+            <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition">Update Province Entry</button>
+            <a href="{% url 'manage_pradesh' %}" class="bg-gray-400 text-white px-6 py-2 rounded-md hover:bg-gray-500 transition">Cancel</a>
+        </div>
+    </form>
+</div>
+<script>
+document.getElementById('add-qa').onclick = function() {
+    var qaList = document.getElementById('qa-list');
+    var newPair = qaList.children[qaList.children.length-1].cloneNode(true);
+    newPair.querySelector('input[name="question"]').value = '';
+    newPair.querySelector('input[name="answer"]').value = '';
+    qaList.appendChild(newPair);
+};
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('remove-qa')) {
+        e.target.parentElement.remove();
+    }
+});
+</script>
+{% endblock %} 

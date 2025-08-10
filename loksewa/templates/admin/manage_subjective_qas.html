@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+<div class="max-w-4xl mx-auto mt-8 px-4">
+    <h1 class="text-3xl font-bold text-blue-800 mb-8">Manage Q&amp;A for {{ chapter.name }}</h1>
+    <div class="bg-white rounded-2xl shadow-xl p-8 mb-8 flex flex-col items-center max-w-3xl mx-auto">
+        <h2 class="text-2xl font-bold text-blue-700 mb-6">Add New Q&amp;A (Bulk)</h2>
+        <form method="post" class="w-full space-y-6" id="bulk-qa-form">
+            {% csrf_token %}
+            <div id="qa-list">
+                <div class="qa-pair mb-6">
+                    <label class="block text-lg font-medium text-gray-700 mb-2">Question:</label>
+                    <textarea name="question" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-2" placeholder="Enter question..."></textarea>
+                    <label class="block text-lg font-medium text-gray-700 mb-2">Answer:</label>
+                    <textarea name="answer" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter answer..."></textarea>
+                    <button type="button" class="remove-qa bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 mt-2 hidden">Remove</button>
+                </div>
+            </div>
+            <button type="button" id="add-qa" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">+ Add More Q&amp;A</button>
+            <button type="submit" class="w-full bg-blue-600 text-white text-lg font-semibold px-6 py-3 rounded-lg hover:bg-blue-700 transition">Add Q&amp;A</button>
+        </form>
+    </div>
+    <div class="bg-white rounded-lg shadow-lg p-6">
+        <h2 class="text-xl font-semibold text-blue-700 mb-4">All Q&amp;A</h2>
+        {% if qas %}
+            <ul class="space-y-4">
+                {% for qa in qas %}
+                <li class="border-b pb-4">
+                    <div class="font-bold text-blue-700 mb-2">Q: {{ qa.question }}</div>
+                    <div class="text-gray-800 mb-2">A: {{ qa.answer }}</div>
+                    <p class="text-sm text-gray-500 mb-2">Created: {{ qa.created_at|date:"F j, Y, g:i a" }} NPT</p>
+                    <span>
+                        <a href="{% url 'edit_subjective_qa' qa.mongoid %}" class="bg-yellow-500 text-white px-3 py-1 rounded text-sm hover:bg-yellow-600">Edit</a>
+                        <a href="{% url 'delete_subjective_qa' qa.mongoid %}" onclick="return confirm('Are you sure you want to delete this Q&amp;A?')" class="bg-red-600 text-white px-3 py-1 rounded text-sm hover:bg-red-700 ml-2">Delete</a>
+                    </span>
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-gray-500">No Q&amp;A found.</p>
+        {% endif %}
+    </div>
+    <a href="{% url 'manage_subjective_chapters' chapter.subject.mongoid %}" class="mt-4 inline-block text-blue-600 hover:underline">&larr; Back to Chapters</a>
+</div>
+<script>
+const qaList = document.getElementById('qa-list');
+document.getElementById('add-qa').onclick = function() {
+    const pairs = qaList.querySelectorAll('.qa-pair');
+    const lastPair = pairs[pairs.length - 1];
+    const newPair = lastPair.cloneNode(true);
+    newPair.querySelector('textarea[name="question"]').value = '';
+    newPair.querySelector('textarea[name="answer"]').value = '';
+    newPair.querySelector('.remove-qa').classList.remove('hidden');
+    qaList.appendChild(newPair);
+};
+qaList.addEventListener('click', function(e) {
+    if (e.target.classList.contains('remove-qa')) {
+        if (qaList.querySelectorAll('.qa-pair').length > 1) {
+            e.target.parentElement.remove();
+        }
+    }
+});
+</script>
+{% endblock %} 

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-6xl mx-auto mt-8 px-4">
+    <h1 class="text-3xl font-bold text-blue-800 mb-8">Pradesh Bishesh</h1>
+    <form method="get" class="mb-8 flex flex-col md:flex-row gap-4 items-center">
+        <label for="province" class="block text-lg font-medium text-gray-700">Select Province:</label>
+        <select name="province" id="province" onchange="this.form.submit()" class="w-60 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+            <option value="">All Provinces</option>
+            {% for k, v in provinces %}
+                <option value="{{ k }}" {% if selected_province == k %}selected{% endif %}>{{ v }}</option>
+            {% endfor %}
+        </select>
+    </form>
+    <div class="grid md:grid-cols-3 gap-8">
+        {% for pradesh in pradeshes %}
+        <div class="bg-white shadow rounded-lg p-6 flex flex-col justify-between">
+            <h2 class="text-xl font-semibold text-blue-700 mb-2">{{ pradesh.title }}</h2>
+            <h6 class="text-sm text-gray-500 mb-2">Province: {{ pradesh.get_province_display }}</h6>
+            {% if pradesh.document %}
+                <a href="{{ pradesh.document.url }}" class="btn btn-sm btn-outline-primary mb-2" target="_blank">Download Document</a>
+            {% endif %}
+            <a href="{% url 'pradesh_detail' pradesh.pk %}" class="btn btn-sm btn-primary">View Details</a>
+        </div>
+        {% empty %}
+        <p class="text-gray-500 col-span-3">No entries found for this province.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %} 

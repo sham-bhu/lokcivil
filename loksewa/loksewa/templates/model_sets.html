@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-4xl mx-auto mt-12">
+    <h1 class="text-3xl font-bold text-blue-800 mb-6">Model Sets</h1>
+    <div class="bg-white shadow rounded-lg p-6">
+        {% if model_sets %}
+            <ul>
+                {% for ms in model_sets %}
+                <li class="mb-2 flex justify-between items-center">
+                    <span>{{ ms.title }}</span>
+                    <div class="flex space-x-2">
+                        {% if ms.file %}
+                        <button onclick="openPdfModal('{{ ms.file.url }}')" class="text-blue-600 hover:underline">Preview</button>
+                        <a href="{{ ms.file.url }}" class="text-blue-600 hover:underline" download>Download PDF</a>
+                        {% else %}
+                        <a href="{{ ms.get_absolute_url }}" class="text-blue-600 hover:underline">View Interactive</a>
+                        {% endif %}
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No model sets found.</p>
+        {% endif %}
+    </div>
+</div>
+<!-- PDF Preview Modal -->
+<div id="pdf-modal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 hidden">
+    <div class="bg-white dark:bg-gray-900 rounded-lg shadow-lg max-w-3xl w-full p-4 relative">
+        <button onclick="closePdfModal()" class="absolute top-2 right-2 text-gray-700 dark:text-gray-200 text-2xl">&times;</button>
+        <iframe id="pdf-frame" src="" class="w-full h-[70vh] border rounded"></iframe>
+    </div>
+</div>
+<script>
+function openPdfModal(url) {
+    document.getElementById('pdf-frame').src = url;
+    document.getElementById('pdf-modal').classList.remove('hidden');
+}
+function closePdfModal() {
+    document.getElementById('pdf-frame').src = '';
+    document.getElementById('pdf-modal').classList.add('hidden');
+}
+</script>
+{% endblock %} 

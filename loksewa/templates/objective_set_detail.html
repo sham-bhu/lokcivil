@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ set.title }} - Practice{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="mb-8">
+        <nav class="flex mb-4" aria-label="Breadcrumb">
+            <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                <li class="inline-flex items-center">
+                    <a href="{% url 'objectives' %}" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white">
+                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+                        </svg>
+                        Objectives
+                    </a>
+                </li>
+                <li>
+                    <div class="flex items-center">
+                        <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        <a href="{% url 'objective_subject_detail' set.subject.mongoid %}" class="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ml-2 dark:text-gray-400 dark:hover:text-white">{{ set.subject.name }}</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="flex items-center">
+                        <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2 dark:text-gray-400">{{ set.title }}</span>
+                    </div>
+                </li>
+            </ol>
+        </nav>
+        
+        <div class="text-center">
+            <h1 class="text-4xl font-bold text-gray-800 dark:text-white mb-4">{{ set.title }}</h1>
+            {% if set.description %}
+                <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">{{ set.description }}</p>
+            {% endif %}
+            <div class="flex justify-center items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
+                <span>{{ set.subject.name }}</span>
+                <span>•</span>
+                <span>{{ mcqs.count }} Questions</span>
+            </div>
+        </div>
+    </div>
+
+    {% if mcqs %}
+        <div class="max-w-4xl mx-auto">
+            {% for mcq in mcqs %}
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg mb-6 p-6" id="mcq-{{ mcq.mongoid }}">
+                <div class="flex items-start justify-between mb-4">
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Question {{ forloop.counter }}</h3>
+                    <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
+                        MCQ
+                    </span>
+                </div>
+                
+                <div class="mb-6">
+                    <p class="text-gray-700 dark:text-gray-300 text-lg leading-relaxed">{{ mcq.question }}</p>
+                </div>
+                
+                <div class="space-y-3 mb-6">
+                    <div class="flex items-center">
+                        <input type="radio" id="option-a-{{ mcq.mongoid }}" name="answer-{{ mcq.mongoid }}" value="A" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <label for="option-a-{{ mcq.mongoid }}" class="ml-3 text-gray-700 dark:text-gray-300 cursor-pointer">
+                            <span class="font-medium">A.</span> {{ mcq.option_a }}
+                        </label>
+                    </div>
+                    <div class="flex items-center">
+                        <input type="radio" id="option-b-{{ mcq.mongoid }}" name="answer-{{ mcq.mongoid }}" value="B" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <label for="option-b-{{ mcq.mongoid }}" class="ml-3 text-gray-700 dark:text-gray-300 cursor-pointer">
+                            <span class="font-medium">B.</span> {{ mcq.option_b }}
+                        </label>
+                    </div>
+                    <div class="flex items-center">
+                        <input type="radio" id="option-c-{{ mcq.mongoid }}" name="answer-{{ mcq.mongoid }}" value="C" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <label for="option-c-{{ mcq.mongoid }}" class="ml-3 text-gray-700 dark:text-gray-300 cursor-pointer">
+                            <span class="font-medium">C.</span> {{ mcq.option_c }}
+                        </label>
+                    </div>
+                    <div class="flex items-center">
+                        <input type="radio" id="option-d-{{ mcq.mongoid }}" name="answer-{{ mcq.mongoid }}" value="D" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <label for="option-d-{{ mcq.mongoid }}" class="ml-3 text-gray-700 dark:text-gray-300 cursor-pointer">
+                            <span class="font-medium">D.</span> {{ mcq.option_d }}
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="flex space-x-3">
+                    <button onclick="checkAnswer('{{ mcq.mongoid }}', '{{ mcq.correct_answer }}')" 
+                            class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg transition-colors duration-200">
+                        Check Answer
+                    </button>
+                    <button onclick="showExplanation('{{ mcq.mongoid }}')" 
+                            class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors duration-200">
+                        Show Explanation
+                    </button>
+                </div>
+                
+                <div id="result-{{ mcq.mongoid }}" class="mt-4 hidden"></div>
+                <div id="explanation-{{ mcq.mongoid }}" class="mt-4 hidden">
+                    {% if mcq.explanation %}
+                        <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+                            <h4 class="font-semibold text-blue-800 dark:text-blue-300 mb-2">Explanation:</h4>
+                            <p class="text-blue-700 dark:text-blue-300">{{ mcq.explanation }}</p>
+                        </div>
+                    {% else %}
+                        <div class="bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-4">
+                            <p class="text-gray-600 dark:text-gray-400">No explanation available for this question.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="text-center py-12">
+            <div class="text-gray-400 dark:text-gray-500 mb-4">
+                <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-600 dark:text-gray-400 mb-2">No Questions Available</h3>
+            <p class="text-gray-500 dark:text-gray-500">Questions will be added by administrators soon.</p>
+        </div>
+    {% endif %}
+</div>
+
+<script>
+function checkAnswer(mcqId, correctAnswer) {
+    const selectedAnswer = document.querySelector(`input[name="answer-${mcqId}"]:checked`);
+    const resultDiv = document.getElementById(`result-${mcqId}`);
+    
+    if (!selectedAnswer) {
+        resultDiv.innerHTML = '<div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4"><p class="text-yellow-700 dark:text-yellow-300">Please select an answer first.</p></div>';
+        resultDiv.classList.remove('hidden');
+        return;
+    }
+    
+    const userAnswer = selectedAnswer.value;
+    const isCorrect = userAnswer === correctAnswer;
+    
+    if (isCorrect) {
+        resultDiv.innerHTML = '<div class="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4"><p class="text-green-700 dark:text-green-300"><strong>Correct!</strong> Well done!</p></div>';
+    } else {
+        resultDiv.innerHTML = `<div class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4"><p class="text-red-700 dark:text-red-300"><strong>Incorrect.</strong> The correct answer is <strong>${correctAnswer}</strong>.</p></div>`;
+    }
+    
+    resultDiv.classList.remove('hidden');
+}
+
+function showExplanation(mcqId) {
+    const explanationDiv = document.getElementById(`explanation-${mcqId}`);
+    explanationDiv.classList.toggle('hidden');
+}
+</script>
+{% endblock %} 

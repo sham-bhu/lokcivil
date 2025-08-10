@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-6xl mx-auto mt-16">
+    <h1 class="text-4xl font-extrabold text-blue-800 dark:text-blue-200 mb-10 text-center drop-shadow">Admin Dashboard</h1>
+    <div class="grid md:grid-cols-3 gap-10">
+        <a href="/manage-notes/" class="bg-white dark:bg-gray-800 shadow-xl rounded-2xl p-8 hover:shadow-2xl hover:scale-105 transition block group">
+            <div class="flex items-center justify-center mb-4"><span class="text-3xl bg-blue-100 text-blue-700 rounded-full p-4 group-hover:bg-blue-700 group-hover:text-white transition">📚</span></div>
+            <h2 class="text-xl font-bold text-blue-700 dark:text-blue-300 mb-2">Manage Notes</h2>
+            <p class="text-gray-700 dark:text-gray-200">Upload, edit, and delete study materials.</p>
+        </a>
+        <a href="/manage-current-event/" class="bg-white dark:bg-gray-800 shadow-xl rounded-2xl p-8 hover:shadow-2xl hover:scale-105 transition block group">
+            <div class="flex items-center justify-center mb-4"><span class="text-3xl bg-blue-100 text-blue-700 rounded-full p-4 group-hover:bg-blue-700 group-hover:text-white transition">📝</span></div>
+            <h2 class="text-xl font-bold text-blue-700 dark:text-blue-300 mb-2">Manage Current Event</h2>
+            <p class="text-gray-700 dark:text-gray-200">Start/end current events, add questions, view results.</p>
+        </a>
+        <a href="/manage-objectives/" class="bg-white dark:bg-gray-800 shadow-xl rounded-2xl p-8 hover:shadow-2xl hover:scale-105 transition block group">
+            <div class="flex items-center justify-center mb-4"><span class="text-3xl bg-blue-100 text-blue-700 rounded-full p-4 group-hover:bg-blue-700 group-hover:text-white transition">📝</span></div>
+            <h2 class="text-xl font-bold text-blue-700 dark:text-blue-300 mb-2">Manage Objectives</h2>
+            <p class="text-gray-700 dark:text-gray-200">Manage objectives for various subjects.</p>
+        </a>
+        <a href="/manage-subjectives/" class="bg-white dark:bg-gray-800 shadow-xl rounded-2xl p-8 hover:shadow-2xl hover:scale-105 transition block group">
+            <div class="flex items-center justify-center mb-4"><span class="text-3xl bg-blue-100 text-blue-700 rounded-full p-4 group-hover:bg-blue-700 group-hover:text-white transition">📝</span></div>
+            <h2 class="text-xl font-bold text-blue-700 dark:text-blue-300 mb-2">Manage Subjectives</h2>
+            <p class="text-gray-700 dark:text-gray-200">Manage subjective questions for various subjects.</p>
+        </a>
+        <a href="/manage-templates/" class="bg-white dark:bg-gray-800 shadow-xl rounded-2xl p-8 hover:shadow-2xl hover:scale-105 transition block group">
+            <div class="flex items-center justify-center mb-4"><span class="text-3xl bg-blue-100 text-blue-700 rounded-full p-4 group-hover:bg-blue-700 group-hover:text-white transition">📄</span></div>
+            <h2 class="text-xl font-bold text-blue-700 dark:text-blue-300 mb-2">Manage Templates</h2>
+            <p class="text-gray-700 dark:text-gray-200">Upload engineering templates and resources.</p>
+        </a>
+        <a href="/manage-gk/" class="bg-white dark:bg-gray-800 shadow-xl rounded-2xl p-8 hover:shadow-2xl hover:scale-105 transition block group">
+            <div class="flex items-center justify-center mb-4"><span class="text-3xl bg-blue-100 text-blue-700 rounded-full p-4 group-hover:bg-blue-700 group-hover:text-white transition">🌏</span></div>
+            <h2 class="text-xl font-bold text-blue-700 dark:text-blue-300 mb-2">Manage GK</h2>
+            <p class="text-gray-700 dark:text-gray-200">Curate Nepal, World, and Technical GK content.</p>
+        </a>
+        <a href="/manage-pradesh/" class="bg-white dark:bg-gray-800 shadow-xl rounded-2xl p-8 hover:shadow-2xl hover:scale-105 transition block group">
+            <div class="flex items-center justify-center mb-4"><span class="text-3xl bg-blue-100 text-blue-700 rounded-full p-4 group-hover:bg-blue-700 group-hover:text-white transition">🏞️</span></div>
+            <h2 class="text-xl font-bold text-blue-700 dark:text-blue-300 mb-2">Manage Pradesh Bishesh</h2>
+            <p class="text-gray-700 dark:text-gray-200">Update region-wise data for 7 provinces.</p>
+        </a>
+        <a href="/manage-model-sets/" class="bg-white dark:bg-gray-800 shadow-xl rounded-2xl p-8 hover:shadow-2xl hover:scale-105 transition block group">
+            <div class="flex items-center justify-center mb-4"><span class="text-3xl bg-blue-100 text-blue-700 rounded-full p-4 group-hover:bg-blue-700 group-hover:text-white transition">📑</span></div>
+            <h2 class="text-xl font-bold text-blue-700 dark:text-blue-300 mb-2">Manage Model Sets</h2>
+            <p class="text-gray-700 dark:text-gray-200">Upload and organize practice question papers.</p>
+        </a>
+        <a href="/manage-gallery/" class="bg-white dark:bg-gray-800 shadow-xl rounded-2xl p-8 hover:shadow-2xl hover:scale-105 transition block group">
+            <div class="flex items-center justify-center mb-4"><span class="text-3xl bg-blue-100 text-blue-700 rounded-full p-4 group-hover:bg-blue-700 group-hover:text-white transition">🖼️</span></div>
+            <h2 class="text-xl font-bold text-blue-700 dark:text-blue-300 mb-2">Manage Gallery</h2>
+            <p class="text-gray-700 dark:text-gray-200">Upload images of toppers, events, and more.</p>
+        </a>
+        <a href="/manage-jobs/" class="bg-white dark:bg-gray-800 shadow-xl rounded-2xl p-8 hover:shadow-2xl hover:scale-105 transition block group">
+            <div class="flex items-center justify-center mb-4"><span class="text-3xl bg-blue-100 text-blue-700 rounded-full p-4 group-hover:bg-blue-700 group-hover:text-white transition">💼</span></div>
+            <h2 class="text-xl font-bold text-blue-700 dark:text-blue-300 mb-2">Manage Job Board</h2>
+            <p class="text-gray-700 dark:text-gray-200">Post and manage job opportunities.</p>
+        </a>
+        <a href="/manage-blog/" class="bg-white dark:bg-gray-800 shadow-xl rounded-2xl p-8 hover:shadow-2xl hover:scale-105 transition block group">
+            <div class="flex items-center justify-center mb-4"><span class="text-3xl bg-blue-100 text-blue-700 rounded-full p-4 group-hover:bg-blue-700 group-hover:text-white transition">📰</span></div>
+            <h2 class="text-xl font-bold text-blue-700 dark:text-blue-300 mb-2">Manage Blog</h2>
+            <p class="text-gray-700 dark:text-gray-200">Post, edit, and delete blog articles.</p>
+        </a>
+    </div>
+</div>
+{% endblock %} 

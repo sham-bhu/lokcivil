@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Bulk Add Questions to {{ model_set.title }}</h2>
+<form method="post">{% csrf_token %}
+<div id="questions-container">
+  <div class="question-block">
+    <input type="text" name="question_text" placeholder="Question" required>
+    <input type="text" name="option_a" placeholder="Option A" required>
+    <input type="text" name="option_b" placeholder="Option B" required>
+    <input type="text" name="option_c" placeholder="Option C" required>
+    <input type="text" name="option_d" placeholder="Option D" required>
+    <select name="correct_option" required>
+      <option value="A">A</option>
+      <option value="B">B</option>
+      <option value="C">C</option>
+      <option value="D">D</option>
+    </select>
+    <input type="text" name="explanation" placeholder="Explanation (optional)">
+    <button type="button" onclick="removeQuestion(this)">Remove</button>
+  </div>
+</div>
+<button type="button" onclick="addQuestion()">Add Another Question</button>
+<button type="submit">Submit All</button>
+</form>
+<script>
+function addQuestion() {
+  var container = document.getElementById('questions-container');
+  var block = document.createElement('div');
+  block.className = 'question-block';
+  block.innerHTML = `<input type="text" name="question_text" placeholder="Question" required>
+    <input type="text" name="option_a" placeholder="Option A" required>
+    <input type="text" name="option_b" placeholder="Option B" required>
+    <input type="text" name="option_c" placeholder="Option C" required>
+    <input type="text" name="option_d" placeholder="Option D" required>
+    <select name="correct_option" required>
+      <option value="A">A</option>
+      <option value="B">B</option>
+      <option value="C">C</option>
+      <option value="D">D</option>
+    </select>
+    <input type="text" name="explanation" placeholder="Explanation (optional)">
+    <button type="button" onclick="removeQuestion(this)">Remove</button>`;
+  container.appendChild(block);
+}
+function removeQuestion(btn) {
+  btn.parentElement.remove();
+}
+</script>
+<a href="{% url 'manage_model_set_questions' model_set.mongoid %}">Back to Questions</a>
+{% endblock %} 

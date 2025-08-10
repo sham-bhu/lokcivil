@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-4xl mx-auto mt-12">
+    <h1 class="text-3xl font-bold text-blue-800 mb-6">Study Notes</h1>
+    <form method="get" class="mb-6">
+        <input type="text" name="q" placeholder="Search notes..." class="border rounded px-4 py-2 w-2/3">
+        <button type="submit" class="bg-blue-700 text-white px-4 py-2 rounded ml-2">Search</button>
+    </form>
+    <div class="bg-white shadow rounded-lg p-6">
+        {% if notes %}
+            <ul>
+                {% for note in notes %}
+                <li class="mb-2 flex justify-between items-center">
+                    <span>{{ note.title }}</span>
+                    <div class="flex space-x-2 items-center">
+                        <button onclick="openPdfModal('{{ note.file.url }}')" class="text-blue-600 hover:underline">Preview</button>
+                        <a href="{{ note.file.url }}" class="text-blue-600 hover:underline" download>Download</a>
+                        {% if user.is_authenticated %}
+                        <button onclick="toggleBookmark('note', {{ note.id }}, this)" class="ml-2">
+                            {% if note.id in bookmarks %}
+                            <span class="text-yellow-400">&#9733;</span>
+                            {% else %}
+                            <span class="text-gray-400">&#9734;</span>
+                            {% endif %}
+                        </button>
+                        {% endif %}
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No notes found.</p>
+        {% endif %}
+    </div>
+</div>
+<!-- PDF Preview Modal -->
+<div id="pdf-modal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 hidden">
+    <div class="bg-white dark:bg-gray-900 rounded-lg shadow-lg max-w-3xl w-full p-4 relative">
+        <button onclick="closePdfModal()" class="absolute top-2 right-2 text-gray-700 dark:text-gray-200 text-2xl">&times;</button>
+        <iframe id="pdf-frame" src="" class="w-full h-[70vh] border rounded"></iframe>
+    </div>
+</div>
+<script>
+function openPdfModal(url) {
+    document.getElementById('pdf-frame').src = url;
+    document.getElementById('pdf-modal').classList.remove('hidden');
+}
+function closePdfModal() {
+    document.getElementById('pdf-frame').src = '';
+    document.getElementById('pdf-modal').classList.add('hidden');
+}
+function toggleBookmark(model, id, btn) {
+    fetch(`/accounts/bookmark/${model}/${id}/`, {method: 'POST', headers: {'X-CSRFToken': '{{ csrf_token }}'}})
+      .then(r => r.json())
+      .then(data => {
+        if(data.status === 'added') {
+          btn.innerHTML = '<span class="text-yellow-400">&#9733;</span>';
+        } else {
+          btn.innerHTML = '<span class="text-gray-400">&#9734;</span>';
+        }
+      });
+}
+</script>
+{% endblock %} 

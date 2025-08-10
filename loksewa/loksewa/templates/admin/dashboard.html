@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-5xl mx-auto mt-12">
+    <h1 class="text-3xl font-bold text-blue-800 mb-8">Admin Dashboard</h1>
+    <div class="grid md:grid-cols-3 gap-8">
+        <a href="/admin/notes/" class="bg-white shadow rounded-lg p-6 hover:bg-blue-50 block">
+            <h2 class="text-xl font-semibold text-blue-700 mb-2">Manage Notes</h2>
+            <p>Upload, edit, and delete study materials.</p>
+        </a>
+        <a href="/admin/quizzes/" class="bg-white shadow rounded-lg p-6 hover:bg-blue-50 block">
+            <h2 class="text-xl font-semibold text-blue-700 mb-2">Manage Quizzes</h2>
+            <p>Start/end quizzes, add questions, view results.</p>
+        </a>
+        <a href="/admin/blog/" class="bg-white shadow rounded-lg p-6 hover:bg-blue-50 block">
+            <h2 class="text-xl font-semibold text-blue-700 mb-2">Manage Blog</h2>
+            <p>Write articles, news, and motivational stories.</p>
+        </a>
+        <a href="/admin/templates/" class="bg-white shadow rounded-lg p-6 hover:bg-blue-50 block">
+            <h2 class="text-xl font-semibold text-blue-700 mb-2">Manage Templates</h2>
+            <p>Upload engineering templates and resources.</p>
+        </a>
+        <a href="/admin/gk/" class="bg-white shadow rounded-lg p-6 hover:bg-blue-50 block">
+            <h2 class="text-xl font-semibold text-blue-700 mb-2">Manage GK</h2>
+            <p>Curate Nepal, World, and Technical GK content.</p>
+        </a>
+        <a href="/admin/pradesh/" class="bg-white shadow rounded-lg p-6 hover:bg-blue-50 block">
+            <h2 class="text-xl font-semibold text-blue-700 mb-2">Manage Pradesh Bishesh</h2>
+            <p>Update region-wise data for 7 provinces.</p>
+        </a>
+        <a href="/admin/model-sets/" class="bg-white shadow rounded-lg p-6 hover:bg-blue-50 block">
+            <h2 class="text-xl font-semibold text-blue-700 mb-2">Manage Model Sets</h2>
+            <p>Upload and organize practice question papers.</p>
+        </a>
+        <a href="/admin/gallery/" class="bg-white shadow rounded-lg p-6 hover:bg-blue-50 block">
+            <h2 class="text-xl font-semibold text-blue-700 mb-2">Manage Gallery</h2>
+            <p>Upload images of toppers, events, and more.</p>
+        </a>
+        <a href="/admin/jobs/" class="bg-white shadow rounded-lg p-6 hover:bg-blue-50 block">
+            <h2 class="text-xl font-semibold text-blue-700 mb-2">Manage Job Board</h2>
+            <p>Post and manage job opportunities.</p>
+        </a>
+    </div>
+</div>
+{% endblock %} 

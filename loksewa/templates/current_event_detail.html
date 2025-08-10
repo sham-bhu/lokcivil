@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-2xl mx-auto mt-12">
+    <h1 class="text-4xl font-extrabold text-blue-800 mb-6">{{ event.title }}</h1>
+    <div class="mb-4 text-gray-500">{{ event.created_at|date:'F j, Y, g:i a' }}</div>
+    {% if event.image %}
+        <img src="{{ event.image.url }}" alt="{{ event.title }}" class="w-full max-h-96 object-contain rounded mb-6">
+    {% endif %}
+    {% if event.document %}
+        <div class="mb-6">
+            <a href="{{ event.document.url }}" class="text-blue-600 hover:underline" target="_blank">View Attached Document</a>
+        </div>
+    {% endif %}
+    <div class="text-lg text-gray-800 leading-relaxed mb-8">{{ event.description|linebreaksbr }}</div>
+</div>
+{% endblock %} 

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-5xl mx-auto mt-12">
+    <h1 class="text-3xl font-bold text-blue-800 mb-6">Gallery</h1>
+    <div class="grid md:grid-cols-3 gap-8">
+        {% for image in images %}
+        <div class="bg-white shadow rounded-lg overflow-hidden">
+            <img src="{{ image.file.url }}" alt="{{ image.caption }}" class="w-full h-48 object-cover">
+            <div class="p-4">
+                <p class="text-gray-700">{{ image.caption }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %} 

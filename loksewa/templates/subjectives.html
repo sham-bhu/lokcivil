@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-4xl mx-auto mt-10 px-4">
+    <h1 class="text-4xl font-extrabold text-blue-800 mb-10 text-center">Subjective Questions</h1>
+    {% if subjects %}
+        <ul class="space-y-6">
+            {% for subject in subjects %}
+            <li>
+                <a href="{% url 'subjective_chapters' subject.mongoid %}" class="text-2xl font-bold text-blue-700 hover:underline">{{ subject.name }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="text-gray-500 text-center">No subjective subjects available.</p>
+    {% endif %}
+</div>
+{% endblock %} 

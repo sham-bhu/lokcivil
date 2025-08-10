@@ -1,0 +1,58 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtual environment
+venv/
+loksewa/venv/
+lp/venv/
+env/
+ENV/
+.venv/
+.ENV/
+
+# Django migrations (except __init__.py)
+*/migrations/*.py
+!*/migrations/__init__.py
+
+# Django static files (collected)
+staticfiles/
+static_root/
+static/
+
+# Environment variables and secrets
+*.env
+.env
+lp/.env
+loksewa/lokcivil-35588-firebase-adminsdk-fbsvc-6135679462.json
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDEs
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Test/coverage
+.coverage
+htmlcov/
+.tox/
+.nox/
+.pytest_cache/
+.cache/
+coverage.xml
+
+# Logs
+*.log
+
+# Other
+*.bak
+*.swp
+*.tmp

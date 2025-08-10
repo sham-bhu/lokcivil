@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="relative bg-gradient-to-br from-blue-200 via-white to-blue-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-24 px-4 text-center overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none">
+        <svg class="absolute top-0 left-0 w-80 h-80 opacity-20 text-blue-300" fill="none" viewBox="0 0 400 400"><circle cx="200" cy="200" r="200" fill="currentColor"/></svg>
+        <svg class="absolute bottom-0 right-0 w-80 h-80 opacity-20 text-blue-400" fill="none" viewBox="0 0 400 400"><circle cx="200" cy="200" r="200" fill="currentColor"/></svg>
+    </div>
+    <h1 class="text-5xl md:text-7xl font-extrabold text-blue-800 dark:text-blue-200 mb-6 drop-shadow-lg">Lok Sewa Preparation Platform</h1>
+    <p class="text-2xl md:text-3xl text-blue-900 dark:text-blue-100 mb-10 font-medium">Your one-stop solution for Engineering & Sub-Engineering Lok Sewa Aayog exam preparation in Nepal.</p>
+    {% if not user.is_authenticated %}
+    <a href="/login/" class="inline-block bg-gradient-to-r from-blue-700 to-blue-500 text-white px-10 py-4 rounded-xl shadow-xl text-xl font-bold hover:scale-105 transition">Get Started</a>
+    {% endif %}
+</section>
+<section class="max-w-6xl mx-auto py-16 grid md:grid-cols-3 gap-10">
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 hover:shadow-2xl transition group">
+        <div class="flex items-center justify-center mb-4">
+            <span class="inline-block bg-blue-100 text-blue-700 rounded-full p-4 text-3xl group-hover:bg-blue-700 group-hover:text-white transition">📚</span>
+        </div>
+        <h2 class="text-2xl font-bold text-blue-700 dark:text-blue-300 mb-2">Comprehensive Notes</h2>
+        <p class="text-gray-700 dark:text-gray-200">Access, search, and download curated study materials for all engineering subjects.</p>
+    </div>
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 hover:shadow-2xl transition group">
+        <div class="flex items-center justify-center mb-4">
+            <span class="inline-block bg-blue-100 text-blue-700 rounded-full p-4 text-3xl group-hover:bg-blue-700 group-hover:text-white transition">📝</span>
+        </div>
+        <h2 class="text-2xl font-bold text-blue-700 dark:text-blue-300 mb-2">Practice Quizzes</h2>
+        <p class="text-gray-700 dark:text-gray-200">Timed MCQ quizzes with instant scoring and answer keys, filterable by topic or level.</p>
+    </div>
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 hover:shadow-2xl transition group">
+        <div class="flex items-center justify-center mb-4">
+            <span class="inline-block bg-blue-100 text-blue-700 rounded-full p-4 text-3xl group-hover:bg-blue-700 group-hover:text-white transition">🌏</span>
+        </div>
+        <h2 class="text-2xl font-bold text-blue-700 dark:text-blue-300 mb-2">Expert Blogs & GK</h2>
+        <p class="text-gray-700 dark:text-gray-200">Read articles, motivational stories, and stay updated with Nepal & World GK.</p>
+    </div>
+</section>
+{% endblock %} 

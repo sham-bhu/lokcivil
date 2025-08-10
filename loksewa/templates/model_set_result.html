@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>{{ model_set.title }} - Test Results</h2>
+<p>Score: {{ score }}/{{ total }} ({{ percent|floatformat:2 }}%)</p>
+<p>Time Taken: {{ elapsed|floatformat:0 }} seconds</p>
+<table><thead><tr><th>Question</th><th>Your Answer</th><th>Correct</th><th>Explanation</th></tr></thead><tbody>
+{% for r in results %}
+<tr>
+  <td>{{ r.question.question_text|truncatechars:50 }}</td>
+  <td>{{ r.user_answer }}</td>
+  <td>{{ r.question.correct_option }}</td>
+  <td>{{ r.question.explanation }}</td>
+</tr>
+{% endfor %}
+</tbody></table>
+<a href="{% url 'model_sets_by_category' model_set.category.mongoid %}">Back to Model Sets</a>
+{% endblock %} 

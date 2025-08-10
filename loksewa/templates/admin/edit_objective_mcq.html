@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit MCQ - Admin{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="mb-8">
+        <nav class="flex mb-4" aria-label="Breadcrumb">
+            <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                <li class="inline-flex items-center">
+                    <a href="{% url 'manage_objectives' %}" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white">
+                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+                        </svg>
+                        Manage Objectives
+                    </a>
+                </li>
+                <li>
+                    <div class="flex items-center">
+                        <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        <a href="{% url 'manage_objective_subjects' %}" class="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ml-2 dark:text-gray-400 dark:hover:text-white">Subjects</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="flex items-center">
+                        <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        <a href="{% url 'manage_objective_sets' mcq.set.subject.mongoid %}" class="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ml-2 dark:text-gray-400 dark:hover:text-white">{{ mcq.set.subject.name }}</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="flex items-center">
+                        <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        <a href="{% url 'manage_objective_mcqs' mcq.set.mongoid %}" class="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ml-2 dark:text-gray-400 dark:hover:text-white">{{ mcq.set.title }}</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="flex items-center">
+                        <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2 dark:text-gray-400">Edit MCQ</span>
+                    </div>
+                </li>
+            </ol>
+        </nav>
+        
+        <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">Edit MCQ</h1>
+        <p class="text-gray-600 dark:text-gray-300">Update MCQ for <span class="font-semibold">{{ mcq.set.title }}</span> ({{ mcq.set.subject.name }})</p>
+    </div>
+
+    <div class="max-w-2xl mx-auto">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+            <form method="post" class="space-y-6">
+                {% csrf_token %}
+                
+                <div>
+                    <label for="question" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Question</label>
+                    <textarea id="question" name="question" rows="3" required
+                              class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white">{{ mcq.question }}</textarea>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="option_a" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Option A</label>
+                        <input type="text" id="option_a" name="option_a" value="{{ mcq.option_a }}" required
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    </div>
+                    <div>
+                        <label for="option_b" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Option B</label>
+                        <input type="text" id="option_b" name="option_b" value="{{ mcq.option_b }}" required
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    </div>
+                    <div>
+                        <label for="option_c" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Option C</label>
+                        <input type="text" id="option_c" name="option_c" value="{{ mcq.option_c }}" required
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    </div>
+                    <div>
+                        <label for="option_d" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Option D</label>
+                        <input type="text" id="option_d" name="option_d" value="{{ mcq.option_d }}" required
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    </div>
+                </div>
+                
+                <div>
+                    <label for="correct_answer" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Correct Answer</label>
+                    <select id="correct_answer" name="correct_answer" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                        <option value="A" {% if mcq.correct_answer == 'A' %}selected{% endif %}>A</option>
+                        <option value="B" {% if mcq.correct_answer == 'B' %}selected{% endif %}>B</option>
+                        <option value="C" {% if mcq.correct_answer == 'C' %}selected{% endif %}>C</option>
+                        <option value="D" {% if mcq.correct_answer == 'D' %}selected{% endif %}>D</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label for="explanation" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Explanation (Optional)</label>
+                    <textarea id="explanation" name="explanation" rows="4"
+                              class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white">{{ mcq.explanation }}</textarea>
+                </div>
+                
+                <div class="flex space-x-4">
+                    <button type="submit" 
+                            class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-colors duration-200">
+                        Update MCQ
+                    </button>
+                    <a href="{% url 'manage_objective_mcqs' mcq.set.mongoid %}" 
+                       class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2 px-4 rounded-md text-center transition-colors duration-200">
+                        Cancel
+                    </a>
+                </div>
+            </form>
+            
+            <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
+                <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">MCQ Preview</h3>
+                <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                    <p class="text-gray-800 dark:text-white mb-3"><strong>Q:</strong> {{ mcq.question }}</p>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex items-center">
+                            <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-800 text-xs font-medium flex items-center justify-center mr-2">A</span>
+                            <span class="text-gray-700 dark:text-gray-300">{{ mcq.option_a }}</span>
+                            {% if mcq.correct_answer == 'A' %}
+                                <span class="ml-2 bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Correct</span>
+                            {% endif %}
+                        </div>
+                        <div class="flex items-center">
+                            <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-800 text-xs font-medium flex items-center justify-center mr-2">B</span>
+                            <span class="text-gray-700 dark:text-gray-300">{{ mcq.option_b }}</span>
+                            {% if mcq.correct_answer == 'B' %}
+                                <span class="ml-2 bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Correct</span>
+                            {% endif %}
+                        </div>
+                        <div class="flex items-center">
+                            <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-800 text-xs font-medium flex items-center justify-center mr-2">C</span>
+                            <span class="text-gray-700 dark:text-gray-300">{{ mcq.option_c }}</span>
+                            {% if mcq.correct_answer == 'C' %}
+                                <span class="ml-2 bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Correct</span>
+                            {% endif %}
+                        </div>
+                        <div class="flex items-center">
+                            <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-800 text-xs font-medium flex items-center justify-center mr-2">D</span>
+                            <span class="text-gray-700 dark:text-gray-300">{{ mcq.option_d }}</span>
+                            {% if mcq.correct_answer == 'D' %}
+                                <span class="ml-2 bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Correct</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% if mcq.explanation %}
+                        <div class="mt-4 pt-3 border-t border-gray-200 dark:border-gray-600">
+                            <p class="text-sm"><strong>Explanation:</strong> {{ mcq.explanation }}</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-4xl mx-auto mt-12">
+    <h1 class="text-3xl font-bold text-blue-800 mb-6">Engineering Templates</h1>
+    <div class="bg-white shadow rounded-lg p-6">
+        {% if templates %}
+            <ul>
+                {% for t in templates %}
+                <li class="mb-2 flex justify-between items-center">
+                    <span>{{ t.title }}</span>
+                    <a href="{{ t.file.url }}" class="text-blue-600 hover:underline" download>Download</a>
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No templates found.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %} 

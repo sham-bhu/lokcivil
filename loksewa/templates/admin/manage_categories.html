@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+.category-container {
+  max-width: 600px;
+  margin: 2.5rem auto;
+  padding: 2rem 2vw;
+  background: #f9fafb;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+.category-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 2rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+.category-table th, .category-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #f0f0f0;
+}
+.category-table th {
+  background: #f8fafc;
+  color: #333;
+  font-weight: 600;
+}
+.category-table tr:hover {
+  background: #f1f5f9;
+}
+.badge {
+  display: inline-block;
+  padding: 0.25em 0.7em;
+  font-size: 0.9em;
+  color: #fff;
+  border-radius: 12px;
+  background: #6366f1;
+  margin-right: 0.5em;
+}
+.action-btn {
+  display: inline-block;
+  margin-right: 0.5em;
+  padding: 0.3em 0.8em;
+  border-radius: 6px;
+  font-size: 0.95em;
+  text-decoration: none;
+  color: #fff;
+  background: #3b82f6;
+  transition: background 0.2s;
+}
+.action-btn.edit { background: #10b981; }
+.action-btn.delete { background: #ef4444; }
+.action-btn:hover { filter: brightness(0.95); }
+.add-form {
+  background: #f8fafc;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+.add-form input, .add-form textarea {
+  width: 100%;
+  padding: 0.7em;
+  margin-bottom: 1em;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 1em;
+}
+.add-form button {
+  background: #6366f1;
+  color: #fff;
+  border: none;
+  padding: 0.7em 2em;
+  border-radius: 6px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.add-form button:hover { background: #4338ca; }
+@media (max-width: 700px) {
+  .category-container { max-width: 98vw; padding: 1rem 1vw; }
+  .category-table, .category-table thead, .category-table tbody, .category-table th, .category-table td, .category-table tr {
+    display: block;
+  }
+  .category-table tr { margin-bottom: 1.5em; }
+  .category-table td { border: none; padding: 0.7em 0; }
+}
+</style>
+<div class="category-container">
+<h2 style="margin-bottom:1.5rem;">Manage Categories</h2>
+<div class="add-form">
+  <h3 style="margin-bottom:1rem;">Add New Category</h3>
+  <form method="post">{% csrf_token %}{{ form.as_p }}<button type="submit">Add Category</button></form>
+</div>
+<table class="category-table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for category in categories %}
+    <tr>
+      <td><span class="badge">{{ category.name }}</span></td>
+      <td>{{ category.description }}</td>
+      <td>
+        <a href="{% url 'edit_category' category.mongoid %}" class="action-btn edit" title="Edit">✏️ Edit</a>
+        <a href="{% url 'delete_category' category.mongoid %}" class="action-btn delete" title="Delete" onclick="return confirm('Delete this category?');">🗑️ Delete</a>
+      </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="3">No categories found.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endblock %} 

@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Edit Model Set</h2>
+<form method="post" enctype="multipart/form-data">{% csrf_token %}{{ form.as_p }}<button type="submit">Save</button></form>
+<a href="{% url 'manage_model_sets' %}">Back to Model Sets</a>
+{% endblock %} 

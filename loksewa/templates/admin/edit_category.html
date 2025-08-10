@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+.edit-category-container {
+  max-width: 500px;
+  margin: 3rem auto;
+  padding: 2rem 2vw;
+  background: #f9fafb;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+.edit-form {
+  background: #f8fafc;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+.edit-form input, .edit-form textarea {
+  width: 100%;
+  padding: 0.7em;
+  margin-bottom: 1em;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 1em;
+}
+.edit-form button {
+  background: #10b981;
+  color: #fff;
+  border: none;
+  padding: 0.7em 2em;
+  border-radius: 6px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-right: 1em;
+}
+.edit-form button:hover { background: #059669; }
+.back-link {
+  display: inline-block;
+  margin-top: 1em;
+  background: #6366f1;
+  color: #fff;
+  padding: 0.6em 1.3em;
+  border-radius: 6px;
+  font-size: 1em;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+.back-link:hover { background: #4338ca; }
+</style>
+<div class="edit-category-container">
+  <h2 style="margin-bottom:1.5rem;">Edit Category</h2>
+  <form method="post" class="edit-form">{% csrf_token %}{{ form.as_p }}<button type="submit">Save</button></form>
+  <a href="{% url 'manage_categories' %}" class="back-link">← Back to Categories</a>
+</div>
+{% endblock %} 

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-5xl mx-auto mt-12">
+    <h1 class="text-3xl font-bold text-blue-800 mb-6">Pradesh Bishesh</h1>
+    <div class="grid md:grid-cols-3 gap-8">
+        {% for pradesh in pradeshes %}
+        <div class="bg-white shadow rounded-lg p-6">
+            <h2 class="text-xl font-semibold text-blue-700 mb-2">{{ pradesh.name }}</h2>
+            <p><strong>Geography:</strong> {{ pradesh.geography }}</p>
+            <p><strong>Administration:</strong> {{ pradesh.administration }}</p>
+            <p><strong>Plans:</strong> {{ pradesh.plans }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %} 
